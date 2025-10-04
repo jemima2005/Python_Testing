@@ -1,8 +1,10 @@
-bin
-include
-lib
-.Python
-tests/
-.envrc
-__pycache__
-/venv/
+# Environnements virtuels Python
+venv/
+.env/
+
+# Fichiers temporaires
+__pycache__/
+*.pyc
+*.pyo
+*.log
+.DS_Store

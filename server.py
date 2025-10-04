@@ -30,16 +30,45 @@ def showSummary():
     return render_template('welcome.html',club=club,competitions=competitions)
 
 
-@app.route('/book/<competition>/<club>')
-def book(competition,club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition)
-    else:
-        flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+from datetime import datetime
 
+@app.route('/book/<competition>/<club>')
+def book(competition, club):
+    # Recherche sécurisée
+    foundClub = next((c for c in clubs if c['name'] == club), None)
+    foundCompetition = next((c for c in competitions if c['name'] == competition), None)
+
+    # Vérifications de base
+    if not foundClub:
+        flash(f"Erreur : club '{club}' introuvable.")
+        return redirect(url_for('index'))
+
+    if not foundCompetition:
+        flash(f"Erreur : compétition '{competition}' introuvable.")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
+
+    # Vérifie si la compétition est déjà passée
+    try:
+        comp_date = datetime.strptime(foundCompetition['date'], "%Y-%m-%d %H:%M:%S")
+        if comp_date < datetime.now():
+            flash(f"La compétition '{foundCompetition['name']}' est déjà terminée.")
+            return render_template('welcome.html', club=foundClub, competitions=competitions)
+    except ValueError:
+        flash("Erreur : format de date de compétition invalide.")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
+
+    # Vérifie les places restantes
+    try:
+        available_places = int(foundCompetition['numberOfPlaces'])
+    except (ValueError, TypeError):
+        available_places = 0
+
+    if available_places <= 0:
+        flash(f"Aucune place disponible pour '{foundCompetition['name']}'.")
+        return render_template('welcome.html', club=foundClub, competitions=competitions)
+
+    # Tout est OK : on peut afficher la page de réservation
+    return render_template('booking.html', club=foundClub, competition=foundCompetition)
 
 @app.route('/purchasePlaces',methods=['POST'])
 def purchasePlaces():

@@ -27,16 +27,22 @@ def index():
     return render_template('index.html')
 
 
-# 🔹 Connexion par email
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
     email = request.form['email'].strip().lower()
     club = next((club for club in clubs if club['email'].lower() == email), None)
-    if club:
-        return render_template('welcome.html', club=club, competitions=competitions)
-    else:
+
+    if not email:
+        flash("Veuillez entrer votre adresse email.")
+        return redirect(url_for('index'))
+
+    if not club:
         flash("Email invalide. Veuillez réessayer.")
         return redirect(url_for('index'))
+
+    # ✅ Si l’email est bon, on continue
+    return render_template('welcome.html', club=club, competitions=competitions)
+
 
 
 # 🔹 Accès à la page de réservation

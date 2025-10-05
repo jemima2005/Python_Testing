@@ -2,9 +2,30 @@
 venv/
 .env/
 
-# Fichiers temporaires
+# Fichiers temporaires et cache
 __pycache__/
 *.pyc
 *.pyo
 *.log
+
+# Fichiers système
 .DS_Store
+Thumbs.db
+
+# Répertoires ou outils spécifiques
+bin/
+include/
+lib/
+.Python
+
+# Configurations locales et IDE
+.envrc
+.vscode/
+.idea/
+
+# Tests
+tests/
+
+# Fichiers de sauvegarde ou temporaires
+*.bak
+*.swp

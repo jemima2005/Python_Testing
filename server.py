@@ -41,8 +41,7 @@ def showSummary():
         return redirect(url_for('index'))
 
     # ✅ Si l’email est bon, on continue
-    return render_template('welcome.html', club=club, competitions=competitions)
-
+    return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
 
 # 🔹 Accès à la page de réservation
@@ -57,16 +56,16 @@ def book(competition, club):
 
     if not foundCompetition:
         flash(f"Erreur : compétition '{competition}' introuvable.")
-        return render_template('welcome.html', club=foundClub, competitions=competitions)
+        return render_template('welcome.html', club=foundClub, competitions=competitions, clubs=clubs)
 
     try:
         comp_date = datetime.strptime(foundCompetition['date'], "%Y-%m-%d %H:%M:%S")
         if comp_date < datetime.now():
             flash(f"La compétition '{foundCompetition['name']}' est déjà terminée.")
-            return render_template('welcome.html', club=foundClub, competitions=competitions)
+            return render_template('welcome.html', club=foundClub, competitions=competitions, clubs=clubs)
     except ValueError:
         flash("Erreur : format de date de compétition invalide.")
-        return render_template('welcome.html', club=foundClub, competitions=competitions)
+        return render_template('welcome.html', club=foundClub, competitions=competitions, clubs=clubs)
 
     try:
         available_places = int(foundCompetition['numberOfPlaces'])
@@ -75,7 +74,7 @@ def book(competition, club):
 
     if available_places <= 0:
         flash(f"Aucune place disponible pour '{foundCompetition['name']}'.")
-        return render_template('welcome.html', club=foundClub, competitions=competitions)
+        return render_template('welcome.html', club=foundClub, competitions=competitions, clubs=clubs)
 
     return render_template('booking.html', club=foundClub, competition=foundCompetition)
 
@@ -103,20 +102,20 @@ def purchasePlaces():
         available_places = int(competition['numberOfPlaces'])
     except (ValueError, TypeError):
         flash("Erreur de données : nombre de places invalide pour cette compétition.")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     try:
         club_points = int(club['points'])
     except (ValueError, TypeError):
         flash("Erreur de données : solde de points invalide pour ce club.")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     bookings = competition.setdefault('bookings', {})
     already_booked = int(bookings.get(club['name'], 0))
 
     if places_required <= 0:
         flash("Erreur : le nombre de places doit être un entier positif.")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     if already_booked + places_required > 12:
         restant_autorise = max(0, 12 - already_booked)
@@ -126,21 +125,21 @@ def purchasePlaces():
             f"Vous pouvez encore réserver au plus {restant_autorise} place(s)."
         )
         flash(msg)
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     if places_required > available_places:
         flash(
             f"Erreur : il ne reste que {available_places} place(s) disponible(s) "
             f"pour « {competition['name']} »."
         )
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     if places_required > club_points:
         flash(
             f"Erreur : points insuffisants. Solde du club : {club_points} point(s). "
             f"Demande : {places_required} place(s)."
         )
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
     # --- Succès ---
     competition['numberOfPlaces'] = available_places - places_required
@@ -152,16 +151,10 @@ def purchasePlaces():
         f"Places restantes : {competition['numberOfPlaces']}. "
         f"Points restants pour {club['name']} : {club['points']}."
     )
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
 
-# 🔹 (Phase 2) Affichage des points publics — à ajouter plus tard
-# @app.route('/points')
-# def showPoints():
-#     return render_template('points.html', clubs=clubs)
-
-
-# # 🔹 Affichage public des points
+# 🔹 Affichage public des points
 @app.route('/points')
 def showPoints():
     """

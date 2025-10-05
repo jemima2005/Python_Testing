@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-
 # --- Chargement des données ---
 def loadClubs():
     with open('clubs.json') as c:
@@ -27,20 +26,28 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/showSummary', methods=['POST'])
+@app.route('/showSummary', methods=['GET', 'POST'])
 def showSummary():
-    email = request.form['email'].strip().lower()
-    club = next((club for club in clubs if club['email'].lower() == email), None)
+    """
+    Page d'accueil après connexion.
+    Gère à la fois POST (connexion par email) et GET (retour depuis une autre page).
+    """
+    if request.method == 'POST':
+        email = request.form['email'].strip().lower()
+        club = next((club for club in clubs if club['email'].lower() == email), None)
 
-    if not email:
-        flash("Veuillez entrer votre adresse email.")
-        return redirect(url_for('index'))
+        if not email:
+            flash("Veuillez entrer votre adresse email.")
+            return redirect(url_for('index'))
 
-    if not club:
-        flash("Email invalide. Veuillez réessayer.")
-        return redirect(url_for('index'))
+        if not club:
+            flash("Email invalide. Veuillez réessayer.")
+            return redirect(url_for('index'))
+    else:
+        # Cas du bouton "Retour" (accès via GET)
+        club = clubs[0]  # Par défaut, on affiche le premier club
+        flash("Retour à la page d'accueil du club.")
 
-    # ✅ Si l’email est bon, on continue
     return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
 
 

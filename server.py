@@ -24,10 +24,25 @@ clubs = loadClubs()
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
+@@app.route('/showSummary', methods=['GET', 'POST'])
 def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html',club=club,competitions=competitions)
+    if request.method == 'POST':
+        email = request.form['email'].strip().lower()
+        club = next((club for club in clubs if club['email'].lower() == email), None)
+
+        if not email:
+            flash("Veuillez entrer votre adresse email.")
+            return redirect(url_for('index'))
+
+        if not club:
+            flash("Email invalide. Veuillez réessayer.")
+            return redirect(url_for('index'))
+    else:
+        # Arrivée par GET (par exemple via le bouton "Retour")
+        club = clubs[0]  # plus tard, tu pourras gérer via une session utilisateur
+
+    return render_template('welcome.html', club=club, competitions=competitions, clubs=clubs)
+
 
 
 @app.route('/book/<competition>/<club>')

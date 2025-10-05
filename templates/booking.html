@@ -2,16 +2,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking for {{competition['name']}} || GUDLFT</title>
+    <title>Réservation - {{ competition['name'] }} | GUDLFT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <h2>{{competition['name']}}</h2>
-    Places available: {{competition['numberOfPlaces']}}
-    <form action="/purchasePlaces" method="post">
-        <input type="hidden" name="club" value="{{club['name']}}">
-        <input type="hidden" name="competition" value="{{competition['name']}}">
-        <label for="places">How many places?</label><input type="number" name="places" id=""/>
-        <button type="submit">Book</button>
+<header>
+    <h1>Réservation pour {{ competition['name'] }}</h1>
+</header>
+
+<main>
+    <h2>{{ competition['name'] }}</h2>
+    <p><strong>Places disponibles :</strong> {{ competition['numberOfPlaces'] }}</p>
+    <p><strong>Club :</strong> {{ club['name'] }}</p>
+    <p><strong>Points restants :</strong> {{ club['points'] }}</p>
+
+    <form action="{{ url_for('purchasePlaces') }}" method="post">
+        <input type="hidden" name="club" value="{{ club['name'] }}">
+        <input type="hidden" name="competition" value="{{ competition['name'] }}">
+
+        <label for="places">Nombre de places à réserver :</label><br>
+        <input type="number" name="places" id="places" min="1" required><br><br>
+
+        <button type="submit">Confirmer la réservation</button>
     </form>
+
+    <br>
+    <a href="{{ url_for('showSummary') }}">← Retour à la liste des compétitions</a>
+</main>
 </body>
 </html>

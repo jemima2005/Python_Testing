@@ -1,36 +1,86 @@
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary | GUDLFT Registration</title>
+    <title>Tableau de bord | GUDLFT Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-        <h2>Welcome, {{club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
 
-    {% with messages = get_flashed_messages()%}
-    {% if messages %}
-        <ul>
-       {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-       </ul>
-    {% endif%}
-    Points available: {{club['points']}}
-    <h3>Competitions:</h3>
-    <ul>
-        {% for comp in competitions%}
-        <li>
-            {{comp['name']}}<br />
-            Date: {{comp['date']}}</br>
-            Number of Places: {{comp['numberOfPlaces']}}
-            {%if comp['numberOfPlaces']|int >0%}
-            <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
-            {%endif%}
-        </li>
-        <hr />
-        {% endfor %}
-    </ul>
-    {%endwith%}
+<body>
+<header>
+    <h1>🏋️‍♀️ Tableau de bord - GUDLFT</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Bienvenue, {{ club['name'] }} !</h2>
+        <p><strong>Email :</strong> {{ club['email'] }}</p>
+        <p><strong>Points disponibles :</strong> {{ club['points'] }}</p>
+        <a href="{{ url_for('logout') }}">🔒 Déconnexion</a>
+    </section>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <section>
+        <h3>🏆 Compétitions disponibles</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Places disponibles</th>
+                    <th>Réserver</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comp in competitions %}
+                    <tr>
+                        <td>{{ comp['name'] }}</td>
+                        <td>{{ comp['date'] }}</td>
+                        <td>{{ comp['numberOfPlaces'] }}</td>
+                        <td>
+                            {% if comp['numberOfPlaces']|int > 0 %}
+                                <a href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">Réserver</a>
+                            {% else %}
+                                <span style="color:gray;">Complet</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h3>📊 Classement des clubs</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Club</th>
+                    <th>Email</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in clubs %}
+                    <tr {% if c['name'] == club['name'] %}style="background-color:#e8f1fa;font-weight:bold;"{% endif %}>
+                        <td>{{ c['name'] }}</td>
+                        <td>{{ c['email'] }}</td>
+                        <td>{{ c['points'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</main>
 
 </body>
 </html>

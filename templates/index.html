@@ -1,16 +1,35 @@
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
+    <title>Connexion | GUDLFT Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
+<header>
+    <h1>🏋️‍♂️ GUDLFT - Portail de Réservation</h1>
+</header>
+
+<main>
+    <h2>Connexion du secrétaire</h2>
+    <p>Veuillez entrer votre adresse email pour accéder à votre espace club :</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('showSummary') }}" method="post">
+        <label for="email">Email :</label><br>
+        <input type="email" name="email" id="email" placeholder="ex: john@simplylift.co" required><br><br>
+        <button type="submit">Se connecter</button>
     </form>
+</main>
 </body>
 </html>

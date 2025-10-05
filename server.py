@@ -161,6 +161,16 @@ def purchasePlaces():
 #     return render_template('points.html', clubs=clubs)
 
 
+# # 🔹 Affichage public des points
+@app.route('/points')
+def showPoints():
+    """
+    Page publique qui affiche le tableau des points disponibles pour chaque club.
+    Accessible sans connexion.
+    """
+    return render_template('points.html', clubs=clubs)
+
+
 # 🔹 Déconnexion
 @app.route('/logout')
 def logout():

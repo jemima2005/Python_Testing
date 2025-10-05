@@ -1,16 +1,36 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUDLFT Registration</title>
+    <title>Connexion | AthletiClub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
-    </form>
+    <header>
+        <h1>🏆 Bienvenue sur AthletiClub</h1>
+        <p>Le portail officiel de gestion des clubs et compétitions sportives.</p>
+    </header>
+
+    <main>
+        <h2>Connexion du secrétaire</h2>
+        <p>Veuillez entrer votre adresse e-mail pour accéder à votre espace club :</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('showSummary') }}" method="post">
+            <label for="email">E-mail :</label><br>
+            <input type="email" name="email" id="email" placeholder="ex: contact@monclub.fr" required><br><br>
+            <button type="submit">Se connecter</button>
+        </form>
+    </main>
 </body>
 </html>

@@ -1,0 +1,42 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau des points | GUDLFT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<header>
+    <h1>📊 Classement des clubs - GUDLFT</h1>
+</header>
+
+<main>
+    <h2>Tableau public des points</h2>
+    <p>Consultez le nombre de points disponibles pour chaque club. Cette page est accessible à tous.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom du club</th>
+                <th>Email</th>
+                <th>Points disponibles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+            <tr>
+                <td>{{ club['name'] }}</td>
+                <td>{{ club['email'] }}</td>
+                <td>{{ club['points'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="{{ url_for('index') }}">⬅ Retour à la page d'accueil</a>
+</main>
+
+</body>
+</html>

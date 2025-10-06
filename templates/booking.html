@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réservation – {{ competition['name'] }} | GUDLFT</title>
+    <title>Réservation – {{ competition['name'] }} | 🏆 AthletiClub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <header>
-        <h1>🏋️‍♂️ GUDLFT – Réservation pour {{ competition['name'] }}</h1>
+        <h1>🏆 AthletiClub – Réservation pour {{ competition['name'] }}</h1>
     </header>
 
     <main>
@@ -29,8 +29,8 @@
             </form>
 
             <br>
-            <!-- ✅ Bouton de retour corrigé -->
-            <a href="{{ url_for('showSummary') }}">← Retour à la liste des compétitions</a>
+            <!-- 🔙 Bouton retour fonctionnel -->
+            <a href="{{ url_for('showSummary') }}">⬅ Retour à la liste des compétitions</a>
         </section>
     </main>
 </body>

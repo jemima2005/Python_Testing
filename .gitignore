@@ -2,7 +2,7 @@
 venv/
 .env/
 
-# Fichiers temporaires et cache
+# Fichiers temporaires et cache Python
 __pycache__/
 *.pyc
 *.pyo

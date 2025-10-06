@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classement des clubs | GUDLFT</title>
+    <title>Classement général | 🏆 AthletiClub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <header>
-        <h1>📊 Classement des clubs - GUDLFT</h1>
+        <h1>📊 Classement général des clubs - AthletiClub</h1>
         <nav>
-            <a href="{{ url_for('index') }}">🏠 Accueil</a>
+            <a href="{{ url_for('showSummary') }}">⬅ Retour au tableau de bord</a>
         </nav>
     </header>
 
@@ -39,7 +40,7 @@
     </main>
 
     <footer>
-        <p>© 2025 GUDLFT - Tous droits réservés</p>
+        <p>© 2025 🏆 AthletiClub - Tous droits réservés</p>
     </footer>
 </body>
 </html>

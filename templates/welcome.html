@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord | GUDLFT Registration</title>
+    <title>Tableau de bord | 🏆 AthletiClub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 <header>
-    <h1>🏋️‍♀️ Tableau de bord - GUDLFT</h1>
+    <h1>🏆 Tableau de bord - AthletiClub</h1>
 </header>
 
 <main>
+    <!-- Section profil du club -->
     <section>
         <h2>Bienvenue, {{ club['name'] }} !</h2>
         <p><strong>Email :</strong> {{ club['email'] }}</p>
@@ -20,6 +21,7 @@
         <a href="{{ url_for('logout') }}">🔒 Déconnexion</a>
     </section>
 
+    <!-- Messages flash -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash">
@@ -30,9 +32,9 @@
         {% endif %}
     {% endwith %}
 
-    <!-- 🏆 Liste des compétitions -->
+    <!-- Liste des compétitions -->
     <section>
-        <h3>🏆 Compétitions disponibles</h3>
+        <h3>🏅 Compétitions disponibles</h3>
         <table>
             <thead>
                 <tr>
@@ -50,9 +52,9 @@
                         <td>{{ comp['numberOfPlaces'] }}</td>
                         <td>
                             {% if comp['numberOfPlaces']|int > 0 %}
-                                <a href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">Réserver</a>
+                                <a href="{{ url_for('book', competition=comp['name'], club=club['name']) }}">🎟️ Réserver</a>
                             {% else %}
-                                <span style="color:gray;">Complet</span>
+                                <span class="complet">Complet</span>
                             {% endif %}
                         </td>
                     </tr>
@@ -61,7 +63,7 @@
         </table>
     </section>
 
-    <!-- 📊 Tableau des points des clubs -->
+    <!-- Tableau des points -->
     <section>
         <h3>📊 Classement des clubs</h3>
         <table>
@@ -74,7 +76,7 @@
             </thead>
             <tbody>
                 {% for c in clubs %}
-                    <tr {% if c['name'] == club['name'] %}style="background-color:#e8f1fa;font-weight:bold;"{% endif %}>
+                    <tr {% if c['name'] == club['name'] %}class="highlight"{% endif %}>
                         <td>{{ c['name'] }}</td>
                         <td>{{ c['email'] }}</td>
                         <td>{{ c['points'] }}</td>
@@ -88,5 +90,8 @@
     </section>
 </main>
 
+<footer>
+    <p>© 2025 🏆 AthletiClub - Tous droits réservés</p>
+</footer>
 </body>
 </html>

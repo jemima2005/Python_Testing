@@ -3,35 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion | GUDLFT Registration</title>
+    <title>Connexion | 🏆 AthletiClub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-<header>
-    <h1>🏋️‍♂️ GUDLFT - Portail de Réservation</h1>
-</header>
+    <header>
+        <h1>🏆 Bienvenue sur AthletiClub</h1>
+        <p>Le portail officiel de gestion des clubs et compétitions sportives.</p>
+    </header>
 
-<main>
-    <h2>Connexion du secrétaire</h2>
-    <p>Veuillez entrer votre adresse email pour accéder à votre espace club :</p>
+    <main>
+        <section>
+            <h2>Connexion du secrétaire</h2>
+            <p>Veuillez entrer votre adresse e-mail pour accéder à votre espace club :</p>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flash">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
-    <form action="{{ url_for('showSummary') }}" method="post">
-        <label for="email">Email :</label><br>
-        <input type="email" name="email" id="email" placeholder="ex: john@simplylift.co" required><br><br>
-        <button type="submit">Se connecter</button>
-    </form>
-</main>
-
+            <form action="{{ url_for('showSummary') }}" method="post">
+                <label for="email">E-mail :</label><br>
+                <input type="email" name="email" id="email" placeholder="ex: contact@monclub.fr" required><br><br>
+                <button type="submit">Se connecter</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

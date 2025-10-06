@@ -1,87 +1,103 @@
-/* static/style.css */
+/* === Palette AthletiClub === */
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --accent-color: #fca311;
+  --background-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-dark: #212529;
+}
+
+/* === Structure générale === */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
+  font-family: 'Poppins', Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
 }
 
+/* === Header === */
 header {
-    background-color: #003366;
-    color: white;
-    padding: 15px 20px;
-    text-align: center;
+  background: linear-gradient(90deg, var(--primary-color), #004085);
+  color: white;
+  padding: 1.2rem 2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-h1, h2, h3 {
-    color: #003366;
+header h1 {
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-main {
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* === Boutons === */
+button, .btn {
+  border-radius: 25px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-form {
-    margin: 20px 0;
+button:hover, .btn:hover {
+  transform: scale(1.03);
+  background-color: var(--accent-color) !important;
+  color: white !important;
 }
 
-input, button {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-button {
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #004999;
-}
-
+/* === Tables === */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ccc;
-}
-
-th, td {
-    padding: 10px;
-    text-align: center;
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 th {
-    background-color: #e8f1fa;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
 
-.flash {
-    background-color: #ffdddd;
-    color: #900;
-    padding: 10px;
-    border: 1px solid #900;
-    margin-bottom: 15px;
-    border-radius: 5px;
+td {
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
 }
 
+tr:nth-child(even) {
+  background-color: #f2f6fc;
+}
+
+/* === Liens === */
 a {
-    color: #0066cc;
-    text-decoration: none;
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s ease;
 }
 
 a:hover {
-    text-decoration: underline;
+  color: var(--accent-color);
+}
+
+/* === Messages flash === */
+.flash {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 15px 0;
+}
+
+/* === Cartes et sections === */
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
